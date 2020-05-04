@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { dbUrl } from "./sequelize/config";
+import { dbUrl } from "./configs/config";
 
 const sequelize = new Sequelize(dbUrl, {    
     dialectOptions: {
