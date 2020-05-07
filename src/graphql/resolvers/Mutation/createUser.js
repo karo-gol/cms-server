@@ -1,4 +1,5 @@
 import { hash } from "bcryptjs";
+import { User } from "#root/db/models/user";
 
 const createUserResolver = async (obj, { login, password, email }) => {
     const hashedPassword = await hash(password, 12);

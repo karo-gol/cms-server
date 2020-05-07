@@ -10,6 +10,7 @@ import accessEnv from "./helpers/accessEnv";
 import setupRoutes from "./routes/routes";
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
+import formatGraphqlErrors from "./helpers/formatGraphqlErrors";
 
 const PORT = accessEnv("PORT", 4000);
 
@@ -27,15 +28,16 @@ app.use(
 
 setupRoutes(app);
 
-app.get("/", (req, res) => res.send("jwt configured!"));
+app.get("/", (req, res) => res.send("hello from NODE server!"));
 
 const apolloServer = new ApolloServer({
-    context: a => a,        
+    context: a => a, 
+    formatError:  formatGraphqlErrors,      
     typeDefs,
     resolvers
 });
 
-apolloServer.applyMiddleware( { app, cors: false } ); 
+apolloServer.applyMiddleware( { app, cors: false, path: "/graphql" } ); 
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server listening on port ${PORT}.`);

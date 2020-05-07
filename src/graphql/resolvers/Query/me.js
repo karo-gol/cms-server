@@ -1,5 +1,6 @@
 import accessEnv from "#root/helpers/accessEnv";
 import { verify } from "jsonwebtoken";
+import { User } from "#root/db/models/user";
 
 const meResolver = async (obj, args, context) => {
     const authorization = context.req.headers['authorization'];
