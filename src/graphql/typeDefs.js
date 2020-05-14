@@ -17,6 +17,7 @@ const typeDefs = gql`
     type Query {
         users: [User!]!
         me: User
+        restricted: String!
     }
 
     type Mutation {

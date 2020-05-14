@@ -1,8 +1,8 @@
 import { verify } from "jsonwebtoken";
 import { createAccessToken, createRefreshToken } from "#root/helpers/jwt/auth";
-import { sendRefreshToken } from "#root/helpers/jwt/sendRefreshToken";
+import sendRefreshToken from "#root/helpers/jwt/sendRefreshToken";
 import { User } from "../db/models/user";
-
+import accessEnv from "#root/helpers/accessEnv";
 
 const setupRoutes = app => {
 
@@ -10,12 +10,12 @@ const setupRoutes = app => {
         const token = req.cookies.jid;
         if(!token) {
             return res.send({ ok: false, accessToken: ' ' });
-        }
-
+        }       
+        
         let payload = null;
         try {
-            payload = verify(token, accessEnv("REFRESH_TOKEN_SECRET"))
-        } catch (err) {
+            payload = verify(token, accessEnv("REFRESH_TOKEN_SECRET"));            
+        } catch (err) {           
             console.log(err);
             return res.send({ ok: false, accessToken: ' ' });
         }
@@ -29,7 +29,7 @@ const setupRoutes = app => {
             return res.send({ ok: false, accessToken: ' ' });
         }
 
-        sendRefreshToken(res, createRefreshToken(user));
+        sendRefreshToken(res, createRefreshToken(user));        
 
         return res.send({ ok: true, accessToken: createAccessToken(user) });
     });
