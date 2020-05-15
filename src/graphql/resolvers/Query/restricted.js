@@ -1,4 +1,4 @@
-import { isAuth } from "#root/helpers/jwt/isAuth";
+import { isAuth } from '#root/helpers/jwt/isAuth';
 
 const restrictedResolver = async (obj, args, context) => {   
     

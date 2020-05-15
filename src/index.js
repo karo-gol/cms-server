@@ -1,18 +1,18 @@
-import "@babel/polyfill";
-import "dotenv/config"
-import cors from "cors";
-import express from "express";
-import bodyParser from "body-parser";
+import '@babel/polyfill';
+import 'dotenv/config'
+import cors from 'cors';
+import express from 'express';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer } from 'apollo-server-express';
 
-import accessEnv from "./helpers/accessEnv";
-import setupRoutes from "./routes/routes";
-import typeDefs from "./graphql/typeDefs";
-import resolvers from "./graphql/resolvers";
-import formatGraphqlErrors from "./helpers/formatGraphqlErrors";
+import accessEnv from './helpers/accessEnv';
+import setupRoutes from './routes/routes';
+import typeDefs from './graphql/typeDefs';
+import resolvers from './graphql/resolvers';
+import formatGraphqlErrors from './helpers/formatGraphqlErrors';
 
-const PORT = accessEnv("PORT", 4000);
+const PORT = accessEnv('PORT', 4000);
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use(
 
 setupRoutes(app);
 
-app.get("/", (req, res) => res.send("hello from NODE server!"));
+app.get('/', (req, res) => res.send('hello from NODE server!'));
 
 const apolloServer = new ApolloServer({
     context: a => a, 
@@ -37,8 +37,8 @@ const apolloServer = new ApolloServer({
     resolvers
 });
 
-apolloServer.applyMiddleware( { app, cors: false, path: "/graphql" } ); 
+apolloServer.applyMiddleware( { app, cors: false, path: '/graphql' } ); 
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server listening on port ${PORT}.`);
 });

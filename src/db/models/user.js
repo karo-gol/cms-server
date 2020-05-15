@@ -25,9 +25,6 @@ User.init(
         password: {
             allowNull: false,
             type: DataTypes.CHAR(64)
-        },
-        tokenVersion: {
-            type: DataTypes.BIGINT
         }
     },
     {

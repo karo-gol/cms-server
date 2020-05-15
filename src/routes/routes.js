@@ -1,32 +1,30 @@
-import { verify } from "jsonwebtoken";
-import { createAccessToken, createRefreshToken } from "#root/helpers/jwt/auth";
-import sendRefreshToken from "#root/helpers/jwt/sendRefreshToken";
-import { User } from "../db/models/user";
-import accessEnv from "#root/helpers/accessEnv";
+import { verify } from 'jsonwebtoken';
+import { createAccessToken, createRefreshToken } from '#root/helpers/jwt/auth';
+import sendRefreshToken from '#root/helpers/jwt/sendRefreshToken';
+import { User } from '../db/models/user';
+import accessEnv from '#root/helpers/accessEnv';
 
 const setupRoutes = app => {
 
-    app.post("/refresh_token", async (req, res) => {
+    app.post('/refresh_token', async (req, res) => {
         const token = req.cookies.jid;
+        const failure = { ok: false, accessToken: '' };
+
         if(!token) {
-            return res.send({ ok: false, accessToken: ' ' });
+            return res.send(failure);
         }       
         
         let payload = null;
         try {
-            payload = verify(token, accessEnv("REFRESH_TOKEN_SECRET"));            
+            payload = verify(token, accessEnv('REFRESH_TOKEN_SECRET'));            
         } catch (err) {           
-            console.log(err);
-            return res.send({ ok: false, accessToken: ' ' });
+            //console.log(err);
+            return res.send(failure);
         }
 
         const user = await User.findOne({ where: { userId: payload.userId } });
         if(!user) {
-            return res.send({ ok: false, accessToken: ' ' });
-        }
-
-        if(user.tokenVersion !== payload.tokenVersion) {
-            return res.send({ ok: false, accessToken: ' ' });
+            return res.send(failure);
         }
 
         sendRefreshToken(res, createRefreshToken(user));        

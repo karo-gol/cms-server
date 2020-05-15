@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server';
 
 
 const typeDefs = gql`
@@ -22,8 +22,7 @@ const typeDefs = gql`
 
     type Mutation {
         createUser(login: String!, password: String!): Boolean
-        loginUser(login: String!, password: String!): LoginResponse
-        updateTokenVersionForUser(userId: ID!): Boolean
+        loginUser(login: String!, password: String!): LoginResponse       
         logoutUser: Boolean
     }
 

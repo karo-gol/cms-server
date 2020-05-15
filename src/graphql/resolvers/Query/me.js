@@ -1,6 +1,6 @@
-import accessEnv from "#root/helpers/accessEnv";
-import { verify } from "jsonwebtoken";
-import { User } from "#root/db/models/user";
+import accessEnv from '#root/helpers/accessEnv';
+import { verify } from 'jsonwebtoken';
+import { User } from '#root/db/models/user';
 
 const meResolver = async (obj, args, context) => {
     const authorization = context.req.headers['authorization'];
@@ -11,7 +11,7 @@ const meResolver = async (obj, args, context) => {
 
     try {
         const token = authorization.split(' ')[1];
-        const payload = verify(token, accessEnv("ACCESS_TOKEN_SECRET"));
+        const payload = verify(token, accessEnv('ACCESS_TOKEN_SECRET'));
 
         return await User.findByPk(payload.userId);
     } catch (err) {

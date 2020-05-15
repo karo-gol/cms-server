@@ -1,5 +1,4 @@
-import { sendRefreshToken } from "#root/helpers/jwt/sendRefreshToken";
-import { User } from "#root/db/models/user";
+import sendRefreshToken from "#root/helpers/jwt/sendRefreshToken";
 
 const logoutUserResolver = (obj, args, context) => {
     sendRefreshToken(context.res, "");
