@@ -22,7 +22,7 @@ const setupRoutes = app => {
             return res.send(failure);
         }
 
-        const user = await User.findOne({ where: { userId: payload.userId } });
+        const user = await User.findOne({ where: { id: payload.userId } });
         if(!user) {
             return res.send(failure);
         }

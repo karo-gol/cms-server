@@ -1,12 +1,10 @@
 import { DataTypes, Model } from "sequelize";
-
 import sequelize from "../connection";
-
 
 export class User extends Model {}
 User.init(
     {
-        userId: {
+        id: {
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
@@ -25,6 +23,9 @@ User.init(
         password: {
             allowNull: false,
             type: DataTypes.CHAR(64)
+        },
+        createdAt: {
+            type: DataTypes.DATE
         }
     },
     {
