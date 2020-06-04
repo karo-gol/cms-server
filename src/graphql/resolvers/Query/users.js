@@ -10,6 +10,7 @@ const usersResolver = async (obj, { offset, limit, order, orderBy, searchText=''
     if(searchText) {        
         users = await User.findAndCountAll({
             where: {
+                deletedAt: null,
                 [Op.or]: [
                     { id: { [Op.substring]: searchText } },
                     { login: { [Op.substring]: searchText } },
@@ -22,7 +23,8 @@ const usersResolver = async (obj, { offset, limit, order, orderBy, searchText=''
             order: [[ orderBy, order ]] 
         });        
     } else {
-        users = await User.findAndCountAll({           
+        users = await User.findAndCountAll({
+            where: { deletedAt: null },           
             offset: offset, 
             limit: limit,
             order: [[ orderBy, order ]] 

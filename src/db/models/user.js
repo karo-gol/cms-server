@@ -26,6 +26,9 @@ User.init(
         },
         createdAt: {
             type: DataTypes.DATE
+        },
+        deletedAt: {
+            type: DataTypes.DATE
         }
     },
     {
