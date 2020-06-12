@@ -1,19 +1,19 @@
-import { User } from '#root/db/models/user';
+import { Page } from '#root/db/models/page';
 import { isAuth } from '#root/helpers/jwt/isAuth';
 import { Op } from 'sequelize';
 
-const usersResolver = async (obj, { offset, limit, order, orderBy, searchText='' }, context) => {
+const pagesResolver = async (obj, { offset, limit, order, orderBy, searchText='' }, context) => {
     await isAuth(context);
 
-    let users = {};
+    let pages = {};
 
     if(searchText) {        
-        users = await User.findAndCountAll({
+        pages = await Page.findAndCountAll({
             where: {
                 deletedAt: null,
                 [Op.or]: [                    
-                    { login: { [Op.substring]: searchText } },
-                    { email: { [Op.substring]: searchText } },                    
+                    { header: { [Op.substring]: searchText } },
+                    { content: { [Op.substring]: searchText } },                    
                 ]
             },
             offset: offset, 
@@ -21,7 +21,7 @@ const usersResolver = async (obj, { offset, limit, order, orderBy, searchText=''
             order: [[ orderBy, order ]] 
         });        
     } else {
-        users = await User.findAndCountAll({
+        pages = await Page.findAndCountAll({
             where: { deletedAt: null },           
             offset: offset, 
             limit: limit,
@@ -29,7 +29,7 @@ const usersResolver = async (obj, { offset, limit, order, orderBy, searchText=''
         });        
     }   
 
-    return { rows: users.rows, count: users.count };
+    return { rows: pages.rows, count: pages.count };
 };
 
-export default usersResolver;
+export default pagesResolver;

@@ -28,11 +28,26 @@ const typeDefs = gql`
         count: Int!
     }
 
+    type Page {
+        id: ID!
+        header: String!
+        content: String!
+        user: User!
+        createdAt: Date!
+    }
+
+    type Pages {
+        rows: [Page!]!
+        count: Int!
+    }
+
     type Query {
         users(offset: Int!, limit: Int!, order: String!, orderBy: String!, searchText: String!): Users!
         me: User
         usersCount: Int!
         user(id: ID!): User
+        pages(offset: Int!, limit: Int!, order: String!, orderBy: String!, searchText: String!): Pages!
+        page(id: ID!): Page
     }
 
     type Mutation {
@@ -41,6 +56,9 @@ const typeDefs = gql`
         logoutUser: Boolean
         updateUser(id: ID!, login: String!, email: String!, password: String!): InfoResponse
         deleteUser(id: ID!): InfoResponse
+        createPage(header: String!, content: String!, userId: ID!): InfoResponse
+        updatePage(id: ID!, header: String!, content: String!, userId: ID!): InfoResponse
+        deletePage(id: ID!): InfoResponse
     }
 `;
 

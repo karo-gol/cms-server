@@ -1,8 +1,8 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../connection";
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../connection';
 
-export class User extends Model {}
-User.init(
+export class Page extends Model {}
+Page.init(
     {
         id: {
             allowNull: false,
@@ -10,19 +10,19 @@ User.init(
             autoIncrement: true,
             type: DataTypes.MEDIUMINT
         },
-        login: {
-            allowNull: false,
-            unique: true,
+        header: {               
             type: DataTypes.STRING
         },
-        email: {
-            allowNull: false,
-            unique: true,
+        content: {
+            allowNull: false,           
             type: DataTypes.STRING
         },
-        password: {
-            allowNull: false,
-            type: DataTypes.CHAR(64)
+        userId: {
+            type: DataTypes.MEDIUMINT,
+            references: {
+                model: User,
+                key: 'id'
+            }
         },
         createdAt: {
             type: DataTypes.DATE
@@ -35,7 +35,7 @@ User.init(
         }
     },
     {
-        modelName: "users",
+        modelName: "pages",
         sequelize
     }
 );
